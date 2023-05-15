@@ -1,12 +1,13 @@
 import data from "../example_drilldown_piechart_data.json";
-import { Children, useEffect, useState } from "react";
+import { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import drilldown from "highcharts/modules/drilldown";
 drilldown(Highcharts);
 
 const Scope = () => {
-  const [series, setSeries] = useState([]);
+  const series = [];
+  const [chartType, setChartType] = useState("pie");
   //step1 scopes
   Object.getOwnPropertyNames(data).map((item, index) => {
     let scopeCount = Object.getOwnPropertyNames(data[item]).length;
@@ -62,11 +63,17 @@ const Scope = () => {
   }
   const options = {
     chart: {
-      type: "pie",
+      type: chartType,
     },
     title: {
       text: "Salacia Programming Challenge",
     },
+    credits: {
+      text: "salaciasolutions.com",
+      href: "https://salaciasolutions.com/",
+      style: { fontSize: "20px", color: "red" },
+    },
+
     series: [
       {
         name: "scopes",
@@ -79,8 +86,27 @@ const Scope = () => {
       series: drilldownInfo,
     },
   };
+  const chartTypes = [
+    { value: "pie", label: "pie" },
+
+    { value: "column", label: "Column" },
+    { value: "bar", label: "Bar" },
+    { value: "line", label: "Line" },
+    // Add more chart types as needed
+  ];
+  const chartTypeChange = (event) => {
+    setChartType(event.target.value);
+  };
   return (
     <div>
+      <label>Please Select Chart Type</label>{" "}
+      <select value={chartType} onChange={chartTypeChange}>
+        {chartTypes.map((type) => (
+          <option key={type.value} value={type.value}>
+            {type.label}
+          </option>
+        ))}
+      </select>
       <HighchartsReact highcharts={Highcharts} options={options} />
     </div>
   );
