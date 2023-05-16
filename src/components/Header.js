@@ -7,7 +7,6 @@ const Header = () => {
     <header className="header">
       <nav className="navbar">
         <div className="logo">
-          {/* <img src="../pic/salacia.png" alt="Logo" /> */}
           <h1>Salacia Solutions</h1>
         </div>
         <ul className="nav-links">

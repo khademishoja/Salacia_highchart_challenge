@@ -11,12 +11,12 @@ const AboutPage = () => {
       <p>
         The main objective of this implementation is to visually represent JSON
         data that consists of three levels of objects.:
-        <ul>
-          <li>Scope</li>
-          <li>Category</li>
-          <li>Individual activities</li>
-        </ul>
       </p>
+      <ul>
+        <li>Scope</li>
+        <li>Category</li>
+        <li>Individual activities</li>
+      </ul>
       <p>
         To achieve this, I utilized the React framework along with high chart
         libraries. The resulting implementation features a three-level
