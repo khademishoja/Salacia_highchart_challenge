@@ -6,7 +6,7 @@ import drilldown from "highcharts/modules/drilldown";
 import "./style.css";
 drilldown(Highcharts);
 
-const Scope = () => {
+const Charts = () => {
   const series = [];
   const [chartType, setChartType] = useState("pie");
   //scopes
@@ -110,4 +110,4 @@ const Scope = () => {
     </div>
   );
 };
-export default Scope;
+export default Charts;

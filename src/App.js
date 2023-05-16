@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import React from "react";
 import AboutPage from "./components/AboutPage";
 
-import Scope from "./components/Scope";
+import Charts from "./components/Charts";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
       <div>
         <Routes>
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/" element={<Scope />} />
+          <Route path="/" element={<Charts />} />
         </Routes>
       </div>
     </div>
