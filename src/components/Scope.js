@@ -10,13 +10,13 @@ const Scope = () => {
   const series = [];
   const [chartType, setChartType] = useState("pie");
   //scopes
-  Object.getOwnPropertyNames(data).map((item, index) => {
-    let scopeCount = Object.getOwnPropertyNames(data[item]).length;
+  Object.getOwnPropertyNames(data).map((scope, index) => {
+    let scopeCount = Object.getOwnPropertyNames(data[scope]).length;
 
     series.push({
-      name: item,
+      name: scope,
       y: scopeCount,
-      drilldown: item,
+      drilldown: scope,
     });
   });
 
