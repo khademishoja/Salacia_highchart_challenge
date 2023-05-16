@@ -3,12 +3,13 @@ import { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import drilldown from "highcharts/modules/drilldown";
+import "./style.css";
 drilldown(Highcharts);
 
 const Scope = () => {
   const series = [];
   const [chartType, setChartType] = useState("pie");
-  //step1 scopes
+  //scopes
   Object.getOwnPropertyNames(data).map((item, index) => {
     let scopeCount = Object.getOwnPropertyNames(data[item]).length;
 
@@ -17,46 +18,43 @@ const Scope = () => {
       y: scopeCount,
       drilldown: item,
     });
-    //console.log(obj);
   });
 
-  // drilldown step2
+  //Category
   const drilldownInfo = [];
   let scopeCounts = Object.getOwnPropertyNames(data).length;
 
   for (let i = 1; i <= scopeCounts; i++) {
-    let children = [];
-    Object.getOwnPropertyNames(data[`Scope ${i}`]).map((item, index) => {
-      let count = Object.getOwnPropertyNames(data[`Scope ${i}`][item]).length;
+    let categories = [];
+    Object.getOwnPropertyNames(data[`Scope ${i}`]).map((category, index) => {
+      let activitiesCount = Object.getOwnPropertyNames(
+        data[`Scope ${i}`][category]
+      ).length;
 
-      children.push({
-        name: item,
-        y: count - 1,
-        drilldown: item,
+      categories.push({
+        name: category,
+        y: activitiesCount - 1, //
+        drilldown: category,
       });
     });
     drilldownInfo.push({
       id: `Scope ${i}`,
-      data: children,
+      data: categories,
     });
   }
 
-  //sctep3
+  //Indivisual activities
   for (let i = 1; i <= scopeCounts; i++) {
-    // debugger;
-    let children = Object.getOwnPropertyNames(data[`Scope ${i}`]);
-    children.map((item, index) => {
-      let level3 = data[`Scope ${i}`][item];
-      const level3Data = level3.map((activity, index) => {
-        // debugger;
+    let categories = Object.getOwnPropertyNames(data[`Scope ${i}`]);
+    categories.map((item, index) => {
+      let activities = data[`Scope ${i}`][item];
+      const level3Data = activities.map((activity, index) => {
         let activityObj = {
           name: activity[0],
-
           y: activity[1],
         };
         return activityObj;
       });
-      console.log(level3Data);
 
       drilldownInfo.push({ id: item, data: level3Data });
     });
@@ -71,7 +69,7 @@ const Scope = () => {
     credits: {
       text: "salaciasolutions.com",
       href: "https://salaciasolutions.com/",
-      style: { fontSize: "20px", color: "red" },
+      style: { padding: "5px", fontSize: "20px", color: "red" },
     },
 
     series: [
@@ -81,7 +79,7 @@ const Scope = () => {
         data: series,
       },
     ],
-    //i added series for each step of drilldown
+    //I added series for each step of drilldown
     drilldown: {
       series: drilldownInfo,
     },
@@ -92,24 +90,24 @@ const Scope = () => {
     { value: "column", label: "Column" },
     { value: "bar", label: "Bar" },
     { value: "line", label: "Line" },
-    // Add more chart types as needed
   ];
   const chartTypeChange = (event) => {
     setChartType(event.target.value);
   };
   return (
-    <div>
-      <label>Please Select Chart Type</label>{" "}
-      <select value={chartType} onChange={chartTypeChange}>
-        {chartTypes.map((type) => (
-          <option key={type.value} value={type.value}>
-            {type.label}
-          </option>
-        ))}
-      </select>
+    <div className="scope-chart">
+      <div className="chart-select">
+        <label>Please Select Chart Type(pie,column,bar,line):</label>
+        <select value={chartType} onChange={chartTypeChange}>
+          {chartTypes.map((type) => (
+            <option key={type.value} value={type.value}>
+              {type.label}
+            </option>
+          ))}
+        </select>
+      </div>
       <HighchartsReact highcharts={Highcharts} options={options} />
     </div>
   );
 };
-
 export default Scope;
